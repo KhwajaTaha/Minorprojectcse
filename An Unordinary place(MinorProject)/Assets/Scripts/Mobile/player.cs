@@ -20,26 +20,32 @@ public class player : MonoBehaviour
     // Update is called once per frame    
     void Update()
     {
-        int i = 0;
-        //loop over every touch found    
-        while (i < Input.touchCount)
+        if (isjump == false)
         {
-            if (Input.GetTouch(i).position.x > ScreenWidth / 2)
+            int i = 0;
+            //loop over every touch found    
+            while (i < Input.touchCount)
             {
-                //move right    
-                RunCharacter(1.0f);
-                  gameObject.GetComponent<SpriteRenderer>().flipX = false;
-                  Debug.Log("in");
 
-            }
-            if (Input.GetTouch(i).position.x < ScreenWidth / 2 )
-            {
-                //move left    
-                RunCharacter(-1.0f);
-                 gameObject.GetComponent<SpriteRenderer>().flipX = true;
 
+                if (Input.GetTouch(i).position.x > ScreenWidth / 2)
+                {
+                    //move right    
+                    RunCharacter(1.0f);
+                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
+                    Debug.Log("in");
+
+                }
+                if (Input.GetTouch(i).position.x < ScreenWidth / 2)
+                {
+                    //move left    
+                    RunCharacter(-1.0f);
+                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
+
+                }
+
+                ++i;
             }
-            ++i;
         }
     }
     void FixedUpdate()
@@ -56,7 +62,9 @@ public class player : MonoBehaviour
     }
     public void jump()
     {
+        isjump = true;
         characterBody.AddForce(transform.up * 300);
+        isjump = false;
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
